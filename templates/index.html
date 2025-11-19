@@ -1,0 +1,201 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+{% for i in detail %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{i.Name}}</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .glass {
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .float-card {
+      transform: translateY(50%);
+    }
+  </style>
+</head>
+
+
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Cover Section -->
+  <section>
+    <div class="absolute top-6 left-6 text-white text-4xl font-bold drop-shadow-xl">
+      My Professional Profile
+    </div>
+
+    <div id="datetime" class="absolute top-6 right-6 text-white text-lg font-semibold drop-shadow-xl"></div>
+  </section>
+
+  <!-- Profile Card -->
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="glass shadow-xl rounded-3xl p-5 float-card w-full max-w-xl mx-auto text-center">
+      <img src="{{ i.image.url }}" alt="Profile Image" class="w-40 h-40 rounded-full border-4 border-white shadow-xl mx-auto mb-6 object-cover" />
+      <h2 class="mt-4 text-3xl font-semibold">{{i.Name}}</h2>
+      <p class="text-gray-400 text-lg">{{i.profession}}</p>
+    </div>
+  </div>
+
+  <!-- Details Section -->
+  <section class="max-w-5xl mx-auto mt-32 px-6 grid md:grid-cols-2 gap-10">
+    <div class="bg-white shadow-lg rounded-2xl p-6">
+      <h3 class="text-2xl font-bold mb-4">Personal Information</h3>
+      <p><strong>Phone:</strong> {{i.phone_no}}</p>
+      <p><strong>Email:</strong> {{i.email}}</p>
+      <p><strong>Address:</strong> {{i.Adress}}</p>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-2xl p-6">
+      <h3 class="text-2xl font-bold mb-4">Professional Summary</h3>
+      <p>
+        {{i.summary}}
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="max-w-5xl mx-auto mt-10 px-6">
+    <div class="bg-white shadow-lg rounded-2xl p-6">
+      <h3 class="text-2xl font-bold mb-4">Skills</h3>
+      <ul class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        {% for s in skills %}
+        <li class="bg-gray-200 font-semibold rounded-xl px-4 py-2 text-center">{{s.skill}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Education & Experience -->
+  <section class="max-w-5xl mx-auto mt-10 px-6 grid md:grid-cols-2 gap-10">
+    <div class="bg-white shadow-lg rounded-2xl p-6">
+      <h3 class="text-2xl font-bold mb-4">Education</h3>
+      <ul class="space-y-3">
+        {% for e in education %}
+        <li>
+          <strong>{{e.degree_title}}</strong> — {{e.institute}}<br />
+          <span class="text-gray-600 text-sm">{{e.starting_year.year}} - {{e.ending_year.year}}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-2xl p-6">
+      <h3 class="text-2xl font-bold mb-4">Experience</h3>
+      <ul class="space-y-3">
+        {% for e in experience %}
+        <li>
+          <strong>{{e.job_title}}</strong> — {{e.company}}<br />
+          <span class="text-gray-600 text-sm">{{e.starting_year.year}} - {{e.ending_year.year}}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById("datetime").innerText = now.toLocaleString();
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+  </script>
+</body>
+
+
+
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{i.Name}}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full bg-white/70 backdrop-blur-md shadow z-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold tracking-tight">My Portfolio</h1>
+      <div class="text-right text-sm text-gray-600">
+        <span id="liveDate"></span> • <span id="liveTime"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative h-[60vh] w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522199670076-2852f80289c7?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center mix-blend-overlay opacity-40"></div>
+
+    <div class="relative z-10 text-center">
+      <img src="{{ i.image.url }}" class="w-40 h-40 rounded-full border-4 border-white shadow-xl mx-auto mb-6 object-cover" />
+      <h2 class="text-white text-4xl font-bold">{{i.Name}}</h2>
+      <p class="text-white/90 text-lg mt-2">{{i.profession}} • Enthusiastic • Innovator</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="max-w-7xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold mb-4">About Me</h2>
+    <p class="text-gray-700 leading-relaxed max-w-3xl">
+      {{i.about_me}}
+  </section>
+
+  <!-- Skills Section -->
+  <section class="max-w-7xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold mb-8">Skills</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for s in skills %}
+      <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold mb-2">{{s.skill}}</h3>
+        <p class="text-gray-600">{{s.description}}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="max-w-7xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold mb-8">Experience</h2>
+    <div class="space-y-6">
+      {% for e in experience %}
+      <div class="p-6 bg-white rounded-xl shadow">
+        <h3 class="text-xl font-semibold">{{e.job_title}}</h3>
+        <p class="text-sm text-gray-600">{{e.starting_year}} – {{e.ending_year}}</p>
+        <p class="mt-3 text-gray-700">{{e.about}}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-7 mt-20">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <p class="text-gray-400">© <span id="year"></span> {{i.Name}} — All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById('liveDate').textContent = now.toLocaleDateString();
+      document.getElementById('liveTime').textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+{% endfor %}
